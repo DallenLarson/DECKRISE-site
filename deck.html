@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deck Showcase</title>
+  <link rel="stylesheet" href="deck.css" />
+  <link rel="stylesheet" href="header.css" />
+</head>
+<body>
+  <header>
+    <script src="inject-header.js" defer></script>
+  </header>
+
+  <div class="top-bar">
+    <img id="sprite" class="sprite" src="" alt="Deck Icon"/>
+    <div class="deck-header">
+      <span class="deck-type">Type</span>
+      <h1 id="deck-name">Deck Name</h1>
+    </div>
+  </div>
+
+  <div class="banner">
+    <img id="deck-art" class="deck-art" src="" alt="Deck Art"/>
+    <h1 id="big-name" class="big-name"></h1>
+  </div>
+
+  <div class="stats-container">
+    <div class="stats">
+      <p><strong>Day 1 Share:</strong> <span id="share-day1"></span></p>
+      <p><strong>Day 2 Share:</strong> <span id="share-day2"></span></p>
+      <p><strong>Win Rate:</strong> <span id="win-rate"></span></p>
+      <p><strong>Tie Rate:</strong> <span id="tie-rate"></span></p>
+      <p><strong>Conversion:</strong> <span id="conversion"></span></p>
+    </div>
+    <div class="matchups">
+      <h2>Matchups:</h2>
+      <table id="matchup-table">
+        <tr><th></th><th>Opponent</th><th>Win %</th><th>Tie %</th></tr>
+      </table>
+    </div>
+    <a class="back" href="meta.html">&#8592; Back to Meta Hub</a>
+  </div>
+
+  <div id="decklist-loading" style="text-align:center; padding:20px;">
+    <p>Loading Decklist...</p>
+  </div>
+
+  <div id="decklist-container">
+    <h2 style="margin: 40px auto; text-align: center;">Decklist:</h2>
+  </div>
+
+  <button class="export-button" id="export-deck-btn">Export as Text</button>
+
+  <div class="player-results" id="player-info"></div>
+  <div class="deck-guide" id="deck-guide"></div>
+
+  <script src="deckStats.js"></script>
+  <script src="deck.js"></script>
+</body>
+</html>

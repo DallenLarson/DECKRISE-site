@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Deck View</title>
+  <link rel="stylesheet" href="deck.css" />
+  <link rel="stylesheet" href="header.css" />
+</head>
+<body>
+  <header>
+    <script src="inject-header.js" defer></script>
+  </header>
+
+  <div class="top-bar">
+    <img id="sprite" class="sprite" src="" alt="Deck Icon"/>
+    <div class="deck-header">
+      <span class="deck-type" id="deckType">Custom</span>
+      <h1 id="deck-name">Deck Title</h1>
+    </div>
+  </div>
+
+  <div class="banner">
+    <img id="deck-art" class="deck-art" src="" alt="Deck Art"/>
+    <h1 id="big-name" class="big-name">Deck Title</h1>
+  </div>
+
+  <div class="stats-container">
+    <div class="decklist-block">
+      <div class="decklist-section">
+        <h3>Deck Primer</h3>
+        <p id="deckPrimer"></p>
+      </div>
+      <div class="decklist-section">
+        <h3>Decklist</h3>
+        <pre id="deckText"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="custom-deck.js" defer></script>
+</body>
+</html>

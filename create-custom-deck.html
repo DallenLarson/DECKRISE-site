@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Custom Deck - LeagueDex</title>
+  <link rel="stylesheet" href="deck.css" />
+  <link rel="stylesheet" href="create-custom-deck.css" />
+  <link rel="stylesheet" href="header.css" />
+  <script src="create-custom-deck.js" defer></script>
+</head>
+<body>
+  <header>
+    <script src="inject-header.js" defer></script>
+  </header>
+  <main class="form-container">
+    <h1>Create Your Custom Deck</h1>
+    <form id="deckForm">
+      <label for="deckName">Deck Name:</label>
+      <input type="text" id="deckName" required />
+
+      <label for="deckPrimer">Deck Primer:</label>
+      <textarea id="deckPrimer" rows="5" placeholder="Explain how to play this deck..."></textarea>
+
+      <label for="deckText">Paste PTCGL Deck List:</label>
+      <textarea id="deckText" rows="12" required placeholder="Pokémon: 13
+4 Great Tusk TEF 97
+..."></textarea>
+
+      <button type="submit">Create Deck</button>
+    </form>
+  </main>
+</body>
+</html>

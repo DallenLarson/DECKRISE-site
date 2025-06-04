@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Decks - LeagueDex</title>
+  <link rel="stylesheet" href="custom-decks.css" />
+  <link rel="stylesheet" href="header.css" />
+  <script src="inject-header.js" defer></script>
+  <script src="deckStats.js" defer></script>
+  <script src="custom-decks.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Custom Decks</h1>
+    <a href="create-custom-deck.html" class="create-deck-btn">➕ Create New Deck</a>
+    <div style="margin-top: 12px;">
+      <label for="sortMode" style="font-size: 0.95em; color: #aaa;">Sort by:</label>
+      <select id="sortMode" style="padding: 6px 10px; margin-left: 6px; background: #222; color: white; border: 1px solid #444; border-radius: 6px;">
+        <option value="share">Share %</option>
+        <option value="winRate">Win Rate</option>
+        <option value="name">Name</option>
+        <option value="price">Deck Price</option>
+      </select>
+    </div>
+  </header>
+  
+  <section class="deck-grid" id="deckGrid"></section>
+</body>
+</html>

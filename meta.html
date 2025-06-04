@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta Hub - DECKRISE</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="header.css" />
+  <link rel="stylesheet" href="meta.css" />
+  <script src="inject-header.js" defer></script>
+  <script src="deckStats.js" defer></script>
+  <script src="meta.js" defer></script>
+</head>
+<body>
+  <header></header>
+
+  <main style="padding-top: 80px;">
+    <section class="meta-controls">
+      <h1 class="meta-title">Top 10 Meta Decks</h1>
+      <div class="sort-wrapper">
+        <label for="sortMode">Sort by:</label>
+        <select id="sortMode">
+          <option value="share">Share %</option>
+          <option value="winRate">Win Rate</option>
+          <option value="name">Name</option>
+          <option value="price">Deck Price</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="deckGrid" class="deck-grid">
+      <!-- Deck rows injected here -->
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,106 @@
+body {
+  margin: 0;
+  background-color: #0f0f0f;
+  color: white;
+  font-family: 'Joti One', cursive;
+}
+
+.meta-controls {
+  text-align: center;
+  padding: 24px 0;
+}
+
+.meta-controls h1 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.meta-controls select {
+  padding: 8px 12px;
+  background: #1a1a1a;
+  color: white;
+  border: 1px solid #333;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.deck-grid {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 16px;
+  padding: 0 20px 60px;
+}
+
+.deck-row {
+  background: #1b1b1b;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.deck-row.rank-1 {
+  border-left: 6px solid gold;
+}
+.deck-row.rank-2 {
+  border-left: 6px solid silver;
+}
+.deck-row.rank-3 {
+  border-left: 6px solid #cd7f32;
+}
+
+.deck-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.deck-info img {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+}
+
+.deck-details h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.deck-details .deck-stats {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.deck-price {
+  text-align: right;
+  font-size: 1rem;
+}
+
+.trend-up {
+  color: lime;
+}
+.trend-down {
+  color: red;
+}
+
+.deck-btn {
+  display: inline-block;
+  margin-top: 8px;
+  background-color: limegreen;
+  color: black;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: background 0.2s ease-in-out;
+}
+
+.deck-btn:hover {
+  background-color: #9fff00;
+}
