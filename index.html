@@ -14,28 +14,46 @@
 <meta name="apple-mobile-web-app-title" content="DECKRISE" />
 <link rel="manifest" href="/site.webmanifest" />
 
+<!-- SEO & Social Sharing Meta -->
 <meta name="description" content="DECKRISE is your go-to hub for the Pokémon TCG community in Austin, TX – top decks, events, and guides all in one place.">
 <meta name="keywords" content="Pokemon TCG, Deck Builder, Meta Hub, DECKRISE, Austin Pokemon, LimitlessTCG, Tournament Finder">
 <meta name="author" content="DECKRISE Team">
 
+<!-- Open Graph for Facebook, Discord, etc -->
 <meta property="og:title" content="DECKRISE - Pokémon TCG Meta Hub">
 <meta property="og:description" content="Track top decks, tournaments, and trends for Pokémon TCG in Austin, TX.">
-<meta property="og:image" content="https://deckrise.com/og-banner.png">
-<meta property="og:url" content="https://deckrise.com">
+<meta property="og:image" content="/embed.png"> <!-- LOCAL IMAGE -->
+<meta property="og:url" content="https://deckrise.net">
 <meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DECKRISE - Pokémon TCG Meta Hub">
+<meta name="twitter:description" content="Track top decks, tournaments, and trends for Pokémon TCG in Austin, TX.">
+<meta name="twitter:image" content="/embed.png"> <!-- LOCAL IMAGE -->
+
 
 </head>
 <body>
   <header>
     <script src="inject-header.js" defer></script>
+    <script src="script.js" defer></script>
   </header>
 
   <section class="ad-banner">
-    <img src="banner.jpg" alt="Destined Rivals" />
+    <div class="ad-banner-wrapper">
+      <img src="banner.jpg" alt="Destined Rivals" />
+      <img class="sv-logo" src="sv-logo.png" alt="SV Logo">
+      <div class="ad-banner-text">
+        <h2>Now Available</h2>
+        <p id="countdown"></p>
+      </div>
+    </div>
   </section>
+  
 
   <section class="featured-section">
-    <h2>This Site Is Under-Construction!</h2>
+    <h2>FEATURED DECKS</h2>
     <div class="deck-reveal">
       <div class="card left hidden">
         <img src="https://images.pokemontcg.io/sv10/199.png" alt="Weezing">

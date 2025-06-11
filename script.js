@@ -43,3 +43,38 @@ events.forEach(e => {
     eventList.appendChild(div);
   }
 });
+
+  function updateCountdown() {
+    const target = new Date("2025-07-13T00:00:00");
+    const now = new Date();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      document.getElementById("countdown").innerText = "Now Legal!";
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+    const mins = Math.floor(diff / (1000 * 60)) % 60;
+    const secs = Math.floor(diff / 1000) % 60;
+
+    document.getElementById("countdown").innerText =
+      ``;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.card');
+  
+    cards.forEach((card, index) => {
+      setTimeout(() => {
+        card.classList.remove('hidden');
+        card.classList.add('visible');
+      }, 300 + index * 300); // delay for each card
+    });
+  });
+  
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+

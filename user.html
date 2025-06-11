@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Deckrise Profile</title>
+  <link rel="stylesheet" href="header.css" />
+  <link rel="stylesheet" href="user.css" />
+  <script src="inject-header.js" defer></script>
+  <script src="user.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-container">
+      <div class="header-left">
+        <a href="index.html" class="logo-link">
+          <img src="sv-logo.png" class="header-logo" alt="Deckrise Logo" />
+        </a>
+        <nav class="header-nav">
+          <a href="index.html">Home</a>
+          <a href="meta.html">Meta Hub</a>
+          <a href="custom-decks.html">Custom Decks</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <h1>Welcome, <span id="username">Player</span></h1>
+
+    <section id="deck-records">
+      <!-- Decks get rendered here -->
+    </section>
+
+    <section id="add-match">
+      <h2>Add Match Result</h2>
+      <form id="match-form">
+        <select id="deck-select"></select>
+        <input type="text" id="opponent-deck" placeholder="Opponent Deck" required />
+        <select id="result-select">
+          <option value="win">Win</option>
+          <option value="loss">Loss</option>
+          <option value="tie">Tie</option>
+        </select>
+        <button type="submit">Add Match</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

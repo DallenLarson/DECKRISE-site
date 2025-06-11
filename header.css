@@ -5,6 +5,30 @@
   font-style: normal;
 }
 
+.user-link {
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+}
+
+.user-icon {
+  height: 24px;
+  width: 24px;
+  filter: brightness(100%);
+  transition: transform 0.2s ease;
+}
+
+.user-link:hover .user-icon {
+  transform: scale(1.1);
+  filter: brightness(150%);
+}
+
+.user-link:hover .user-icon {
+  transform: scale(1.1);
+  filter: brightness(0) saturate(100%) invert(82%) sepia(100%) saturate(1200%) hue-rotate(40deg) brightness(120%) contrast(110%);
+}
+
+
 .site-header {
   position: fixed;
   top: 0;
