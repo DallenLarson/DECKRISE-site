@@ -838,3 +838,193 @@ cardList: {
 
 
 };
+
+
+// 🔸 2. Live Update System (using TrainerHill)
+window.addEventListener("DOMContentLoaded", async () => {
+  const deckGrid = document.getElementById("deckGrid");
+  const sortMode = document.getElementById("sortMode");
+  const apiKey = "7e56dabe-1394-4d6e-aa3b-f7250070b899";
+
+  // Load + Save local cache
+  const loadCachedPrices = () => JSON.parse(localStorage.getItem("deckPrices") || "{}");
+  const saveCachedPrices = (p) => localStorage.setItem("deckPrices", JSON.stringify(p));
+
+  // 🔹 Live deck puller from TrainerHill
+  async function fetchTrainerHillMeta() {
+    const proxy =
+      "https://api.allorigins.win/get?url=" +
+      encodeURIComponent("https://limitlesstcg.com/api/tournaments/v2/decks");
+  
+    try {
+      const res = await fetch(proxy);
+      const data = await res.json();
+  
+      // Parse the wrapped JSON (since AllOrigins wraps it)
+      const json = JSON.parse(data.contents);
+  
+      if (!Array.isArray(json) || json.length === 0)
+        throw new Error("No decks returned from Limitless API");
+  
+      // Normalize top 10 decks
+      const topDecks = json.slice(0, 10);
+      const updates = {};
+      for (const deck of topDecks) {
+        const name = deck.archetype_name || deck.deck_name || "Unknown Deck";
+        const id = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        const share = parseFloat(deck.meta_share || 0);
+        const winRate = parseFloat(deck.win_rate || 0);
+  
+        updates[id] = {
+          name,
+          shareRate: share.toFixed(2),
+          winRate: winRate.toFixed(2),
+        };
+      }
+  
+      if (Object.keys(updates).length > 0) {
+        console.log(`✅ ${Object.keys(updates).length} decks fetched from Limitless`);
+        console.table(updates);
+      } else {
+        console.warn("⚠️ No decks parsed from Limitless response");
+      }
+  
+      return updates;
+    } catch (err) {
+      console.warn("⚠️ Failed to fetch live Limitless data:", err);
+      return {};
+    }
+  }
+  
+  
+
+  // 🔹 Merge live data into deckStats
+  async function updateDeckStats() {
+    try {
+      const liveData = await fetchTrainerHillMeta();
+      Object.entries(liveData).forEach(([id, update]) => {
+        if (!window.deckStats[id]) {
+          // Add new deck if not tracked yet
+          window.deckStats[id] = {
+            name: update.name,
+            sprite: "https://r2.limitlesstcg.net/pokemon/gen9/unknown.png",
+            price: 0,
+          };
+        }
+        // Merge updated fields
+        Object.assign(window.deckStats[id], update);
+      });
+      console.log("✅ Meta decks updated from TrainerHill.");
+      localStorage.setItem("deckStatsCache", JSON.stringify(window.deckStats));
+    } catch (err) {
+      console.warn("⚠️ Failed to fetch live TrainerHill data:", err);
+      // fallback to cache if available
+      const cached = localStorage.getItem("deckStatsCache");
+      if (cached) window.deckStats = JSON.parse(cached);
+    }
+  }
+
+  // 🔹 Price calculation stays the same
+  async function getDeckPrice(cardList) {
+    if (!cardList) return 0;
+    let total = 0;
+    const all = [...(cardList.pokemon || []), ...(cardList.trainer || []), ...(cardList.energy || [])];
+
+    for (const entry of all) {
+      const cardId = `${entry.set}-${entry.number}`;
+      try {
+        const res = await fetch(`https://api.pokemontcg.io/v2/cards/${cardId}`, {
+          headers: { "X-Api-Key": apiKey },
+        });
+        const data = await res.json();
+        const priceTypes = Object.values(data.data.tcgplayer?.prices || {});
+        if (priceTypes.length && priceTypes[0].market) {
+          total += priceTypes[0].market * entry.count;
+        }
+      } catch {
+        console.warn("Price error:", cardId);
+      }
+    }
+
+    return parseFloat(total.toFixed(2));
+  }
+
+  // 🔹 Convert data → render array
+  function getDecksArray(useLivePrices = false, cachedPrices = {}) {
+    return Object.entries(window.deckStats)
+      .filter(([_, d]) => d.shareRate && d.shareRate.trim() !== "")
+      .map(([id, d]) => {
+        const trend =
+          (parseFloat(d.shareDay1) ?? 0) < (parseFloat(d.shareRate) ?? 0)
+            ? "up"
+            : "down";
+        return {
+          id,
+          name: d.name,
+          icon: d.sprite,
+          share: parseFloat(d.shareRate) || 0,
+          winRate: parseFloat(d.winRate) || 0,
+          topCut: d.conversion || "TBD",
+          price: useLivePrices ? cachedPrices[id] ?? d.price ?? 0 : d.price ?? 0,
+          trend,
+        };
+      });
+  }
+
+  // 🔹 Renderer
+  function renderDecks(decks, sortKey = "share") {
+    deckGrid.innerHTML = "";
+
+    if (sortKey === "name") decks.sort((a, b) => a.name.localeCompare(b.name));
+    else decks.sort((a, b) => b[sortKey] - a[sortKey]);
+
+    decks.forEach((deck, i) => {
+      const row = document.createElement("div");
+      row.className = `deck-row${i === 0 ? " rank-1" : i === 1 ? " rank-2" : i === 2 ? " rank-3" : ""}`;
+      row.innerHTML = `
+  <div class="deck-info">
+    <img src="${deck.icon}" alt="${deck.name}" />
+    <div class="deck-details">
+      <h2>${deck.name}</h2>
+      <div class="deck-stats">
+        Share: ${deck.share.toFixed(2)}%<br>
+        Win Rate: ${deck.winRate.toFixed(1)}%<br>
+        Top Cut: ${deck.topCut}
+      </div>
+    </div>
+  </div>
+  <div class="deck-price">
+    $${deck.price.toFixed(2)}<br>
+    <span class="${deck.trend === "up" ? "trend-up" : "trend-down"}">
+      ${deck.trend === "up" ? "⬆️" : "⬇️"}
+    </span>
+    <a href="deck.html?deck=${deck.id}" class="deck-btn">View Deck</a>
+  </div>`;
+      deckGrid.appendChild(row);
+    });
+  }
+
+  // 🔹 Boot sequence
+  await updateDeckStats();
+
+  const cached = loadCachedPrices();
+  const updatedPrices = {};
+  for (const [id, d] of Object.entries(window.deckStats)) {
+    if (!cached[id] && d.cardList) {
+      const price = await getDeckPrice(d.cardList);
+      updatedPrices[id] = price;
+      cached[id] = price;
+    }
+  }
+  saveCachedPrices(cached);
+
+  const decks = getDecksArray(true, cached);
+  renderDecks(decks, sortMode.value);
+
+  sortMode.addEventListener("change", (e) => {
+    renderDecks(getDecksArray(true, loadCachedPrices()), e.target.value);
+  });
+
+  // 🔁 Auto-refresh every 12 hours
+  setInterval(updateDeckStats, 1000 * 60 * 60 * 12);
+});
